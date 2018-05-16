@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         Request request = new Request.Builder()
                 .url(forecastURL)
                 .build();
+
         Call call = client.newCall(request);
         call.enqueue(new Callback() {
             @Override
@@ -59,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void alertUserAboutError() {
         AlertDialogFragment dialog = new AlertDialogFragment();
+        dialog.show(getFragmentManager(), "error_dialog");
 
     }
 }
