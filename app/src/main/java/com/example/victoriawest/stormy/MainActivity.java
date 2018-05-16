@@ -29,21 +29,25 @@ public class MainActivity extends AppCompatActivity {
 
         OkHttpClient client = new OkHttpClient();
 
-        Request request = new Request.Builder().url(forecastURL).build();
+        Request request = new Request.Builder()
+                .url(forecastURL)
+                .build();
         Call call = client.newCall(request);
         call.enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 try {
-
+                    Log.v(TAG, response.body().string());
                     if (response.isSuccessful()) {
-                        Log.v(TAG, response.body().string());
+
+                    } else {
+                        alertUserAboutError();
                     }
+
 
                 } catch (IOException e) {
                     Log.e(TAG, "IO Exception caught: ", e);
@@ -51,5 +55,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         Log.d(TAG, "main ui code is running");
+    }
+
+    private void alertUserAboutError() {
+        AlertDialogFragment dialog = new AlertDialogFragment();
+
     }
 }
