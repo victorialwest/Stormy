@@ -50,10 +50,10 @@ public class MainActivity extends AppCompatActivity {
         final ActivityMainBinding binding = DataBindingUtil
                 .setContentView(MainActivity.this, R.layout.activity_main);
 
-        iconImageView = findViewById(R.id.iconImageView);
+        iconImageView = findViewById(R.id.icon_imageview);
 
         // Setup Dark Sky Link
-        TextView darkSky = findViewById(R.id.darkSkyAttribution);
+        TextView darkSky = findViewById(R.id.darksky_attribution);
         darkSky.setMovementMethod(LinkMovementMethod.getInstance());
 
         String apiKey = "80cc6a0ebfc0208808d0a822d4758789";
