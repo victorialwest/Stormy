@@ -1,11 +1,14 @@
 package com.example.victoriawest.stormy;
 
 import android.content.Context;
+import android.databinding.DataBindingUtil;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -28,7 +31,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        final ActivityMainBinding binding = DataBindingUtil.setContentView(MainActivity.this, R.layout.activity_main);
+
+        TextView darkSky = findViewById(R.id.darksky_attribution);
+        darkSky.setMovementMethod(LinkMovementMethod.getInstance());
 
         String apiKey = "80cc6a0ebfc0208808d0a822d4758789";
         double lattitude = 37.8267;
@@ -50,12 +56,25 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onResponse(Call call, Response response) throws IOException {
+                public void onResponse(Call call, Response response) {
                     try {
                         String jsonData = response.body().string();
                         Log.v(TAG, jsonData);
                         if (response.isSuccessful()) {
                             currentWeather = getCurrentDetails(jsonData);
+
+                            CurrentWeather displayWeather = new CurrentWeather(
+                                    currentWeather.getLocationLabel();
+                                    currentWeather.getIcon();
+                                    currentWeather.getTime();
+                                    currentWeather.getTemperature();
+                                    currentWeather.getHumidity();
+                                    currentWeather.getPrecipChance();
+                                    currentWeather.getSummary();
+                                    currentWeather.getTimeZone();
+                            );
+
+                            binding.setWeather(displayWeather);
 
                         } else {
                             alertUserAboutError();
